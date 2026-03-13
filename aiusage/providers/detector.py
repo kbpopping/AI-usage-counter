@@ -88,6 +88,7 @@ MODEL_ALIASES: dict[str, str] = {
     "gpt-4.1-nano":          "GPT-4.1 Nano",
     "o3":                    "o3",
     "o4-mini":               "o4-mini",
+    "gemini-3.1-pro":        "Gemini 3.1 Pro",
     "gemini-2.5-pro":        "Gemini 2.5 Pro",
     "gemini-2.5-flash":      "Gemini 2.5 Flash",
     "gemini-2.0-flash":      "Gemini 2.0 Flash",
@@ -138,7 +139,7 @@ def detect_ide() -> str:
     term_program = os.environ.get("TERM_PROGRAM", "").lower()
     vscode_pid = os.environ.get("VSCODE_PID") or os.environ.get("VSCODE_IPC_HOOK_CLI")
     cursor_env = os.environ.get("CURSOR_TRACE_ID") or os.environ.get("CURSOR_SESSION_ID")
-    antigravity_env = os.environ.get("ANTIGRAVITY_ENV") or os.environ.get("ANTIGRAVITY_SESSION")
+    antigravity_env = os.environ.get("ANTIGRAVITY_ENV") or os.environ.get("ANTIGRAVITY_SESSION") or os.environ.get("ANTIGRAVITY_AGENT")
     trae_env = os.environ.get("TRAE_SESSION") or os.environ.get("TRAE_IDE")
     windsurf_env = os.environ.get("WINDSURF_EXTENSION_NAME")
 
@@ -232,7 +233,7 @@ def _read_codex_last_model() -> Optional[str]:
 
 def _read_gemini_last_model() -> Optional[str]:
     """Try to read last Gemini model from env or config."""
-    return os.environ.get("GEMINI_MODEL") or os.environ.get("GOOGLE_AI_MODEL") or "gemini-2.5-pro"
+    return os.environ.get("GEMINI_MODEL") or os.environ.get("GOOGLE_AI_MODEL") or "gemini-3.1-pro"
 
 
 @dataclass
@@ -299,7 +300,7 @@ def detect_context() -> DetectedContext:
         defaults = {
             "claude":      "claude-sonnet-4-5",
             "codex":       "gpt-4o",
-            "gemini":      "gemini-2.5-pro",
+            "gemini":      "gemini-3.1-pro",
             "openrouter":  "gpt-4o",
         }
         ctx.model = defaults.get(ctx.provider, "claude-sonnet-4-5")

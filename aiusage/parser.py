@@ -128,6 +128,11 @@ def _parse_jsonl_file(
                 if ts is None:
                     ts = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
 
+                # Override provider if the model indicates a different backend
+                actual_provider = provider
+                if "gemini" in model.lower():
+                    actual_provider = "gemini"
+
                 yield UsageRecord(
                     timestamp=ts,
                     session_id=session_id,
@@ -137,7 +142,7 @@ def _parse_jsonl_file(
                     output_tokens=usage.get("output_tokens", 0),
                     cache_write_tokens=usage.get("cache_creation_input_tokens", 0),
                     cache_read_tokens=usage.get("cache_read_input_tokens", 0),
-                    provider=provider,
+                    provider=actual_provider,
                 )
     except (OSError, PermissionError):
         return
