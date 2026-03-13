@@ -1,0 +1,4 @@
+[console_scripts]
+aiusage = aiusage.cli:main
+aiusage-chart = aiusage.cli:main
+aiusage-watch = aiusage.cli:main

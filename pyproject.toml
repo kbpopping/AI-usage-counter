@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiusage"
+version = "1.1.0"
+description = "Track AI token usage from Claude Code, Codex, Gemini, OpenRouter — with live charts, progress bars, and IDE auto-detection"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = [
+    "claude", "codex", "openai", "gemini", "openrouter",
+    "token", "usage", "cli", "llm", "ai", "chart", "progress",
+    "cursor", "vscode", "ide", "rate-limit",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Utilities",
+]
+
+dependencies = [
+    "click>=8.1",
+    "rich>=13.0",
+]
+
+[project.scripts]
+# Main entry point
+aiusage = "aiusage.cli:main"
+# Convenience aliases — pin these in a dedicated IDE terminal pane
+aiusage-watch = "aiusage.cli:main"
+aiusage-chart = "aiusage.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["aiusage*"]
